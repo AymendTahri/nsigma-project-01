@@ -69,60 +69,51 @@ lebonimag/
     ├── login.html          # Connexion
     └── register.html       # Inscription
 ```
-## 2.Vue d'ensemble des relations
-
-```text
-users (1) ──────< listings (N)
-  id                user_id (FK -> users.id)
-```
-
-* Un utilisateur (`users`) peut publier **0 à plusieurs** annonces (`listings`).
-* Chaque annonce (`listings`) appartient à **un seul** utilisateur (`user_id`).
-* Si un utilisateur est supprimé, ses annonces sont supprimées automatiquement (`ON DELETE CASCADE`).
-
 ---
 
-### 1. Table `users`
+## 3. Workflow Git (Git Flow)
 
-Stocke les comptes utilisateurs et leurs informations de profil.
-
-| Colonne         | Type      | Contraintes                          | Description                              |
-| `id`            | `INTEGER` | `PRIMARY KEY AUTOINCREMENT`          | Identifiant unique de l'utilisateur      |
-| `name`          | `TEXT`    | `NOT NULL`                           | Nom ou pseudo affiché sur le site et le profil |
-| `email`         | `TEXT`    | `NOT NULL UNIQUE`                    | Adresse email (identifiant de connexion) |
-| `password_hash` | `TEXT`    | `NOT NULL`                           | Mot de passe sécurisé (hashé)            |
-| `created_at`    | `TEXT`    | `NOT NULL DEFAULT CURRENT_TIMESTAMP` | Date et heure de création du compte      |
-
----
-
-### 2. Table `listings`
-
-Stocke les petites annonces publiées par les utilisateurs.
-
-| Colonne          | Type SQLite | Contraintes                   | Description                   |
-| `id`             | `INTEGER`   | `PRIMARY KEY AUTOINCREMENT`   | Identifiant  de l'annonce     |
-| `user_id`        | `INTEGER`   | `users(id) ON DELETE CASCADE` | Auteur / vendeur de l'annonce |
-| `title`          | `TEXT`      | `NOT NULL`                    | Titre de l'annonce            |
-| `city`           | `TEXT`      | `NOT NULL`                    | Ville de l'annonce            |
-| `price`          | `INTEGER`   | `NOT NULL`                    | Prix en euros (`€`)           |
-| `description`    | `TEXT`      | `NOT NULL`                    | Description détaillée du bien |
-| `image_filename` | `TEXT`      | `NOT NULL`                    | image  dans `static/uploads/` |
-| `is_sold`        | `INTEGER`   | `NOT NULL DEFAULT 0`          | `0` = disponible, `1` = vendu |
-| `created_at`     | `TEXT`      | `DEFAULT CURRENT_TIMESTAMP`   | Date et heure de publication  |
-
----
----
-
-## 3. Règles Git pour l'équipe
-
-* **Avant de commencer à coder**, récupérer les dernières modifications :
-  ```bash
-  git pull origin main
-  ```
-* **Après avoir testé son code**, enregistrer et envoyer son travail :
-  ```bash
-  git add .
-  git commit -m "Description courte de la modification"
-  git push origin main
-  ```
+* **Branche `main`** : contient uniquement du code propre et fonctionnel. Pas de développement direct dessus (hors initialisation de base).
+* **Règle d'or** : **1 fonctionnalité = 1 branche dédiée**, puis **Pull Request + validation** par un membre de l'équipe avant tout merge dans `main`.
 * **Ne jamais pousser** le dossier `.venv/` ni `__pycache__/`.
+
+### Étapes pour développer une feature
+
+1. **Partir d'un `main` à jour :**
+   ```cmd
+   git checkout main
+   git pull origin main
+   ```
+
+2. **Créer sa branche dédiée :**
+   ```cmd
+   git checkout -b feat/nom-de-la-feature
+   ```
+   *(Exemples : `feat/auth-login`, `feat/filtres-annonces`, `feat/profil-utilisateur`, `feat/statut-vendu`, `fix/upload-image`.)*
+
+3. **Coder, commit et pousser la branche :**
+   ```cmd
+   git add -A
+   git commit -m "feat: description courte"
+   git push -u origin feat/nom-de-la-feature
+   ```
+   *(Pour les commits suivants sur la même branche : `git add -A`, `git commit -m "..."` et `git push`.)*
+
+4. **Ouvrir une Pull Request (PR) et faire valider :**
+   * Créer une PR de `feat/nom-de-la-feature` vers `main` sur GitHub.
+   * Faire relire / valider par un coéquipier (et pousser d'éventuels correctifs sur la même branche si besoin).
+
+5. **Après le merge sur `main` — mettre à jour son poste et nettoyer :**
+   ```cmd
+   git checkout main
+   git pull origin main
+   git branch -d feat/nom-de-la-feature
+   ```
+
+### Si `main` a avancé pendant que tu codais ta branche
+
+```cmd
+git checkout feat/nom-de-la-feature
+git merge main
+```
+*(Résoudre les éventuels conflits, puis `git push`.)*
