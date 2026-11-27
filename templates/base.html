@@ -5,15 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% block title %}lebonimag{% endblock %}</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body class="bg-[#FAF7F2] text-stone-900 min-h-screen flex flex-col">
-
-  <header class="border-b border-stone-200/80">
+  {# {% set is_loged = true %} #}
+  <header class="bg-[#FAF7F2] border-b border-stone-200/80">
     <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-      <a href="/" class="text-xl font-bold tracking-tight">lebonimag</a>
-      <a href="/ajouter" class="bg-[#C2410C] hover:bg-[#9A3412] text-white text-sm font-medium px-4 py-2 rounded-lg">
-        Déposer une annonce
+      <a href="/" class="text-xl font-bold tracking-tight text-stone-900">
+        lebon<span class="text-[#00A300]">imag</span>
       </a>
+
+      {% if is_loged %}
+        <div class="flex items-center gap-3">
+          <a href="/ajouter"
+             class="bg-[#00A300] hover:bg-[#008800] text-white hover:text-[#FFE600] text-sm font-medium px-4 py-2 rounded-lg transition">
+            Déposer une annonce
+          </a>
+          <a href="/profil"
+             aria-label="Mon profil"
+             class="w-9 h-9 rounded-full bg-white border border-[#00A300] text-[#00A300] hover:bg-[#00A300] hover:text-[#FFE600] flex items-center justify-center transition">
+            <i class="fa-regular fa-user text-sm"></i>
+          </a>
+        </div>
+      {% else %}
+        <div class="flex items-center gap-2">
+          <a href="/connexion"
+             class="bg-white hover:bg-[#00A300] text-[#00A300] hover:text-[#FFE600] text-sm font-medium px-4 py-2 rounded-lg border border-[#00A300] transition">
+            Se connecter
+          </a>
+          <a href="/inscription"
+             class="bg-[#00A300] hover:bg-[#008800] text-white hover:text-[#FFE600] text-sm font-medium px-4 py-2 rounded-lg transition">
+            S'inscrire
+          </a>
+        </div>
+      {% endif %}
     </div>
   </header>
 

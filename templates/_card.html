@@ -1,0 +1,30 @@
+<a href="/annonce/1" {# href="{{ url_for('detail_annonce', annonce_id=annonce['id']) }}" #}
+   class="group block focus:outline-none">
+  <div class="relative aspect-[4/3] bg-stone-200/70 rounded-lg overflow-hidden border border-stone-200 group-hover:border-[#00A300] transition">
+    {# {% if annonce["image_filename"] %} #}
+      <img src="/static/uploads/exemple1.jpg" {# src="{{ url_for('static', filename='uploads/' + annonce['image_filename']) }}" #}
+           alt="Vélo de ville" {# alt="{{ annonce['title'] }}" #}
+           class="w-full h-full object-cover group-hover:scale-[1.02] transition duration-200">
+    {# {% endif %} #}
+
+    {# {% if annonce["is_sold"] == 1 %} #}
+      {# <span class="absolute top-2 left-2 bg-stone-900/85 text-[#FFE600] text-[11px] font-semibold px-2 py-0.5 rounded">Vendu</span> #}
+    {# {% endif %} #}
+  </div>
+
+  <div class="pt-2.5">
+    <div class="flex items-baseline justify-between gap-2">
+      <h2 class="text-sm font-semibold text-stone-900 group-hover:text-[#00A300] truncate transition">
+        {# {{ annonce["title"] }} #}
+        Vélo de ville
+      </h2>
+      <span class="text-sm font-bold text-stone-900 whitespace-nowrap">
+        {# {{ annonce["price"] }} #} 85 €
+      </span>
+    </div>
+    <p class="text-xs text-stone-500 mt-0.5">
+      {# {{ annonce["city"] }} #}
+      Grenoble
+    </p>
+  </div>
+</a>

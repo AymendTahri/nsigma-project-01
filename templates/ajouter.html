@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-lg mx-auto mt-10 bg-white p-6 rounded-xl shadow border border-gray-200">
+  <h1 class="text-2xl font-bold mb-6 text-gray-900">Déposer une annonce</h1>
+
+  <form method="POST" action="/ajouter" enctype="multipart/form-data">
+    <!-- Titre -->
+    <div class="mb-4">
+      <label for="title" class="block text-sm font-medium text-gray-700">Titre de l'annonce</label>
+      <input type="text" id="title" name="title" placeholder="Ex : Vélo de route, Calculatrice TI-83..."
+             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00A300] focus:border-[#00A300]"
+             required>
+    </div>
+
+    <!-- Prix et Ville côte à côte -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+      <div>
+        <label for="price" class="block text-sm font-medium text-gray-700">Prix (€)</label>
+        <input type="number" id="price" name="price" min="0" step="1" placeholder="Ex : 25"
+               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00A300] focus:border-[#00A300]"
+               required>
+      </div>
+
+      <div>
+        <label for="city" class="block text-sm font-medium text-gray-700">Ville</label>
+        <input type="text" id="city" name="city" placeholder="Ex : Grenoble, Saint-Martin-d'Hères..."
+               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00A300] focus:border-[#00A300]"
+               required>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-4">
+      <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+      <textarea id="description" name="description" rows="4" placeholder="Décris l'état du bien, les dimensions, les modalités de remise..."
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00A300] focus:border-[#00A300]"
+                required></textarea>
+    </div>
+
+    <!-- Photo -->
+    <div class="mb-6">
+      <label for="image" class="block text-sm font-medium text-gray-700">Photo du bien</label>
+      <input type="file" id="image" name="image" accept="image/*"
+             class="mt-1 block w-full text-sm text-gray-600
+                    file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0
+                    file:text-sm file:font-medium file:bg-green-50 file:text-[#00A300]
+                    hover:file:bg-green-100 cursor-pointer"
+             required>
+    </div>
+
+    <!-- Bouton de validation -->
+    <button type="submit"
+            class="w-full bg-[#00A300] hover:bg-[#008500] text-white text-sm font-medium px-4 py-2.5 rounded-lg transition">
+      Publier l'annonce
+    </button>
+  </form>
+</div>
+{% endblock %}

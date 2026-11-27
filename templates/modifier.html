@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+
+  <!-- En-tête simple -->
+  <div class="pb-5 border-b border-stone-200 flex items-center justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-bold tracking-tight text-stone-900">Modifier l'annonce</h1>
+      <p class="text-sm text-stone-500 mt-0.5">
+        Annonce {# #{{ annonce["id"] }} #} #1
+      </p>
+    </div>
+
+    <a href="/annonce/1" {# href="{{ url_for('detail_annonce', annonce_id=annonce['id']) }}" #}
+       class="text-sm text-stone-600 hover:text-[#00A300] transition">
+      Annuler
+    </a>
+  </div>
+
+  <!-- Formulaire d'édition -->
+  <form method="POST" action="/annonce/1/modifier" {# action="{{ url_for('modifier_annonce', annonce_id=annonce['id']) }}" #}
+        enctype="multipart/form-data"
+        class="pt-6 space-y-5">
+
+    <!-- Titre -->
+    <div>
+      <label for="title" class="block text-sm font-medium text-stone-700 mb-1">Titre</label>
+      <input type="text" id="title" name="title"
+             value="Vélo de ville" {# value="{{ annonce['title'] }}" #}
+             class="w-full px-3 py-2 bg-white border border-stone-300 rounded-md text-sm focus:outline-none focus:border-[#00A300]"
+             required>
+    </div>
+
+    <!-- Prix et Ville -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label for="price" class="block text-sm font-medium text-stone-700 mb-1">Prix (€)</label>
+        <input type="number" id="price" name="price" min="0" step="1"
+               value="85" {# value="{{ annonce['price'] }}" #}
+               class="w-full px-3 py-2 bg-white border border-stone-300 rounded-md text-sm focus:outline-none focus:border-[#00A300]"
+               required>
+      </div>
+
+      <div>
+        <label for="city" class="block text-sm font-medium text-stone-700 mb-1">Ville</label>
+        <input type="text" id="city" name="city"
+               value="Grenoble" {# value="{{ annonce['city'] }}" #}
+               class="w-full px-3 py-2 bg-white border border-stone-300 rounded-md text-sm focus:outline-none focus:border-[#00A300]"
+               required>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div>
+      <label for="description" class="block text-sm font-medium text-stone-700 mb-1">Description</label>
+      <textarea id="description" name="description" rows="4"
+                class="w-full px-3 py-2 bg-white border border-stone-300 rounded-md text-sm focus:outline-none focus:border-[#00A300]"
+                required>{# {{ annonce["description"] }} #}Bon état général, freins révisés, remise en main propre à Grenoble ou Saint-Martin-d'Hères.</textarea>
+    </div>
+
+    <!-- Statut vendu -->
+    <div class="pt-1">
+      <label class="inline-flex items-center gap-2 text-sm text-stone-700 cursor-pointer">
+        <input type="checkbox" name="is_sold" value="1"
+               {# {% if annonce["is_sold"] == 1 %}checked{% endif %} #}
+               class="rounded border-stone-300 text-[#00A300] focus:ring-[#00A300]">
+        Marquer l'annonce comme vendue
+      </label>
+    </div>
+
+    <!-- Photo actuelle + remplacement optionnel -->
+    <div class="pt-2 border-t border-stone-200 space-y-3">
+      <p class="text-sm font-medium text-stone-700">Photo</p>
+
+      <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+        <div class="w-32 h-24 bg-stone-200/70 rounded-md overflow-hidden border border-stone-200 shrink-0">
+          {# {% if annonce["image_filename"] %} #}
+            <img src="/static/uploads/exemple1.jpg" {# src="{{ url_for('static', filename='uploads/' + annonce['image_filename']) }}" #}
+                 alt="Photo actuelle"
+                 class="w-full h-full object-cover">
+          {# {% else %} #}
+            {# <div class="w-full h-full flex items-center justify-center text-xs text-stone-400">Aucune photo</div> #}
+          {# {% endif %} #}
+        </div>
+
+        <div class="flex-1">
+          <label for="image" class="block text-xs text-stone-500 mb-1">
+            Remplacer la photo (optionnel — laisse vide pour garder l'actuelle)
+          </label>
+          <input type="file" id="image" name="image" accept="image/*"
+                 class="block w-full text-xs text-stone-600
+                        file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border file:border-stone-300
+                        file:text-xs file:font-medium file:bg-white file:text-stone-700
+                        hover:file:border-[#00A300] cursor-pointer">
+        </div>
+      </div>
+    </div>
+
+    <!-- Bouton enregistrer -->
+    <div class="pt-4 flex items-center gap-3">
+      <button type="submit"
+              class="bg-[#00A300] hover:bg-[#008800] text-white hover:text-[#FFE600] text-sm font-medium px-5 py-2 rounded-md transition">
+        Enregistrer les modifications
+      </button>
+    </div>
+  </form>
+
+  <!-- Suppression séparée dans son propre formulaire POST -->
+  <div class="mt-10 pt-5 border-t border-stone-200 flex items-center justify-between gap-4">
+    <div>
+      <p class="text-sm font-medium text-stone-900">Supprimer l'annonce</p>
+      <p class="text-xs text-stone-500">Cette action est définitive.</p>
+    </div>
+
+    <form method="POST" action="/annonce/1/supprimer" {# action="{{ url_for('supprimer_annonce', annonce_id=annonce['id']) }}" #}
+          onsubmit="return confirm('Supprimer définitivement cette annonce ?');">
+      <button type="submit"
+              class="px-4 py-1.5 text-sm font-medium text-red-700 bg-white border border-red-300 hover:bg-red-50 rounded-md transition">
+        Supprimer
+      </button>
+    </form>
+  </div>
+
+</div>
+{% endblock %}

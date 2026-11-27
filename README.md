@@ -47,35 +47,44 @@ L'application est ensuite accessible dans le navigateur à l'adresse : `http://1
 
 ## 2. Architecture du projet
 
-```
+```text
 lebonimag/
 ├── .gitignore
 ├── README.md
 ├── requirements.txt
-├── lebonimag.db          # Base SQLite (conservée dans le dépôt)
-├── init_db.sql           # Création des tables + données de test
-├── database.py           # Connexion SQLite et helpers (fetch_all, fetch_one, execute_query)
-├── crud.py               # Logique métier annonces & utilisateur (filtres, CRUD, is_sold)
-├── app.py                # Routes Flask et gestion des sessions
+├── archi_bdd.md              # Architecture de la base de données
+├── demarche.md               # Démarche / notes projet
+├── Maquette – Site de pet... # Maquette PDF du site
+├── lebonimag.db              # Base SQLite (conservée dans le dépôt)
+├── init_db.sql               # Création des tables + données de test
+├── database.py               # Connexion SQLite et helpers (fetch_all, fetch_one, execute_query)
+├── crud.py                   # Logique métier annonces & utilisateur (filtres, CRUD, is_sold)
+├── app.py                    # Routes Flask et gestion des sessions
 ├── static/
-│   └── uploads/          # Photos des annonces (conservées dans le dépôt)
+│   └── uploads/              # Photos des annonces (conservées dans le dépôt)
 └── templates/
-    ├── base.html           # Structure commune, navbar et messages flash
-    ├── index.html          # Accueil, barre de filtres et grille d'annonces
-    ├── detail.html         # Détail d'une annonce + état vendu / contacter / modifier / supprimer
-    ├── form.html           # Formulaire d'ajout ou modification d'annonce
-    ├── mes_annonces.html   # Annonces de l'utilisateur connecté + bascule is_sold
-    ├── profil.html         # Informations de l'utilisateur connecté
-    ├── login.html          # Connexion
+    ├── _card.html            # Composant carte d'annonce réutilisable
+    ├── ajouter.html          # Page de dépôt d'une annonce
+    ├── base.html             # Structure commune, navbar et messages flash
+    ├── connexion.html        # Page de connexion
+    ├── detail.html           # Détail d'une annonce + état vendu / contacter / modifier / supprimer
+    ├── form.html             # Formulaire d'ajout ou modification d'annonce
+    ├── index.html            # Accueil, barre de filtres et grille d'annonces
+    ├── inscription.html      # Page d'inscription
+    ├── mes_annonces.html     # Annonces de l'utilisateur connecté + bascule is_sold
+    ├── modifier.html         # Page de modification d'une annonce
+    ├── profil.html           # Informations de l'utilisateur connecté
+    ├── login.html            # Connexion
     └── register.html       # Inscription
 ```
+
 ---
 
 ## 3. Workflow Git (Git Flow)
 
-* **Branche `main`** : contient uniquement du code propre et fonctionnel. Pas de développement direct dessus (hors initialisation de base).
-* **Règle d'or** : **1 fonctionnalité = 1 branche dédiée**, puis **Pull Request + validation** par un membre de l'équipe avant tout merge dans `main`.
-* **Ne jamais pousser** le dossier `.venv/` ni `__pycache__/`.
+- **Branche `main`** : contient uniquement du code propre et fonctionnel. Pas de développement direct dessus (hors initialisation de base).
+- **Règle d'or** : **1 fonctionnalité = 1 branche dédiée**, puis **Pull Request + validation** par un membre de l'équipe avant tout merge dans `main`.
+- **Ne jamais pousser** le dossier `.venv/` ni `__pycache__/`.
 
 ### Étapes pour développer une feature
 
@@ -100,8 +109,8 @@ lebonimag/
    *(Pour les commits suivants sur la même branche : `git add -A`, `git commit -m "..."` et `git push`.)*
 
 4. **Ouvrir une Pull Request (PR) et faire valider :**
-   * Créer une PR de `feat/nom-de-la-feature` vers `main` sur GitHub.
-   * Faire relire / valider par un coéquipier (et pousser d'éventuels correctifs sur la même branche si besoin).
+   - Créer une PR de `feat/nom-de-la-feature` vers `main` sur GitHub.
+   - Faire relire / valider par un coéquipier (et pousser d'éventuels correctifs sur la même branche si besoin).
 
 5. **Après le merge sur `main` — mettre à jour son poste et nettoyer :**
    ```cmd

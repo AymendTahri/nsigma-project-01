@@ -1,5 +1,81 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1 class="text-2xl font-bold">Petites annonces</h1>
+  <!-- En-tête + filtres -->
+  <div class="pb-6 border-b border-stone-200 space-y-4">
+    <div class="flex items-baseline justify-between">
+      <h1 class="text-2xl font-bold tracking-tight text-stone-900">Petites annonces</h1>
+      <span class="text-sm text-stone-500">{# {{ annonces | length }} #} 6 résultats</span>
+    </div>
+
+    <form method="GET" action="/" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5">
+      <!-- Recherche mot-clé -->
+      <div class="relative lg:col-span-2">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-xs"></i>
+        <input type="text" name="q" placeholder="Que recherches-tu ?"
+               {# value="{{ request.args.get('q', '') }}" #}
+               class="w-full pl-8 pr-3 py-1.5 bg-white border border-stone-300 rounded-md text-sm focus:outline-none focus:border-[#00A300]">
+      </div>
+
+      <!-- Ville -->
+      <div class="relative">
+        <i class="fa-solid fa-location-dot absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-xs"></i>
+        <input type="text" name="city" placeholder="Ville"
+               {# value="{{ request.args.get('city', '') }}" #}
+               class="w-full pl-8 pr-3 py-1.5 bg-white border border-stone-300 rounded-md text-sm focus:outline-none focus:border-[#00A300]">
+      </div>
+
+      <!-- Prix min / max -->
+      <div class="flex gap-2">
+        <input type="number" name="min_price" min="0" placeholder="Min €"
+               {# value="{{ request.args.get('min_price', '') }}" #}
+               class="w-1/2 px-2.5 py-1.5 bg-white border border-stone-300 rounded-md text-sm focus:outline-none focus:border-[#00A300]">
+        <input type="number" name="max_price" min="0" placeholder="Max €"
+               {# value="{{ request.args.get('max_price', '') }}" #}
+               class="w-1/2 px-2.5 py-1.5 bg-white border border-stone-300 rounded-md text-sm focus:outline-none focus:border-[#00A300]">
+      </div>
+
+      <!-- Tri -->
+      <select name="sort"
+              class="px-2.5 py-1.5 bg-white border border-stone-300 rounded-md text-sm text-stone-700 focus:outline-none focus:border-[#00A300]">
+        <option value="recent">Plus récentes</option>
+        <option value="price_asc">Prix croissant</option>
+        <option value="price_desc">Prix décroissant</option>
+      </select>
+
+      <!-- Bouton Filtrer + Reset -->
+      <div class="flex gap-2">
+        <button type="submit"
+                class="flex-1 bg-[#00A300] hover:bg-[#008800] text-white hover:text-[#FFE600] text-sm font-medium px-3 py-1.5 rounded-md transition">
+          Filtrer
+        </button>
+        <a href="/" title="Réinitialiser les filtres"
+           class="px-2.5 py-1.5 bg-white border border-stone-300 hover:border-stone-400 text-stone-600 rounded-md text-sm flex items-center justify-center transition">
+          <i class="fa-solid fa-rotate-left text-xs"></i>
+        </a>
+      </div>
+
+      <!-- Checkbox disponibles uniquement -->
+      <label class="sm:col-span-2 lg:col-span-6 inline-flex items-center gap-2 text-xs text-stone-600 cursor-pointer pt-0.5">
+        <input type="checkbox" name="available_only" value="1"
+               {# {% if request.args.get('available_only') %}checked{% endif %} #}
+               class="rounded border-stone-300 text-[#00A300] focus:ring-[#00A300]">
+        Afficher uniquement les annonces disponibles (masquer les vendues)
+      </label>
+    </form>
+  </div>
+
+  <!-- Grille d'annonces -->
+  {# {% if annonces %} #}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-6">
+      {# {% for annonce in annonces %} #}
+        {% include "_card.html" %}
+        {% include "_card.html" %}
+        {% include "_card.html" %}
+        {% include "_card.html" %}
+      {# {% endfor %} #}
+    </div>
+  {# {% else %} #}
+    {# <p class="text-sm text-stone-500 py-12">Aucune annonce ne correspond à tes filtres.</p> #}
+  {# {% endif %} #}
 {% endblock %}

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto mt-10 space-y-8 scroll-smooth">
+
+  <!-- Carte principale du profil -->
+  <div class="bg-white p-6 rounded-xl shadow border border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div class="flex items-center gap-4">
+      <div class="w-14 h-14 rounded-full bg-green-50 border-2 border-[#00A300] flex items-center justify-center text-[#00A300] text-2xl">
+        <i class="fa-regular fa-user"></i>
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900">
+          {# {{ user["name"] }} #}
+          Jean Dupont
+        </h1>
+        <p class="text-sm text-gray-500">
+          {# {{ user["email"] }} #}
+          jean.dupont@grenoble-inp.org
+        </p>
+        <p class="text-xs text-gray-400 mt-1">
+          Membre depuis le {# {{ member_since }} #} 2026-11-27
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-3">
+      <a href="/ajouter"
+         class="bg-[#FACC15] hover:bg-[#EAB308] text-gray-900 text-sm font-semibold px-4 py-2 rounded-lg transition">
+        Déposer une annonce
+      </a>
+      <a href="#annonces-profil"
+         class="bg-white hover:bg-[#00A300] hover:text-white text-[#00A300] text-sm font-medium px-4 py-2 rounded-lg border border-[#00A300] transition">
+        Mes annonces
+      </a>
+    </div>
+  </div>
+
+  <!-- Compteurs simples (valeurs fictives en attendant le back) -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <div class="bg-white p-4 rounded-xl shadow border border-gray-200">
+      <p class="text-sm text-gray-500">Annonces publiées</p>
+      <p class="text-2xl font-bold text-gray-900 mt-1">
+        {# {{ nb_total }} #}
+        3
+      </p>
+    </div>
+    <div class="bg-white p-4 rounded-xl shadow border border-gray-200">
+      <p class="text-sm text-gray-500">Disponibles</p>
+      <p class="text-2xl font-bold text-[#00A300] mt-1">
+        {# {{ nb_disponibles }} #}
+        2
+      </p>
+    </div>
+    <div class="bg-white p-4 rounded-xl shadow border border-gray-200">
+      <p class="text-sm text-gray-500">Vendues</p>
+      <p class="text-2xl font-bold text-[#EAB308] mt-1">
+        {# {{ nb_vendues }} #}
+        1
+      </p>
+    </div>
+  </div>
+
+  <!-- Formulaire de mise à jour du profil -->
+  <div class="bg-white p-6 rounded-xl shadow border border-gray-200">
+    <h2 class="text-lg font-bold text-gray-900 mb-4">Modifier mes informations</h2>
+
+    <form method="POST" action="/profil">
+      <div class="mb-4">
+        <label for="name" class="block text-sm font-medium text-gray-700">Nom ou pseudo</label>
+        <input type="text" id="name" name="name"
+               value="Jean Dupont" {# value="{{ user['name'] }}" #}
+               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00A300] focus:border-[#00A300]"
+               required>
+      </div>
+
+      <div class="mb-6">
+        <label for="email" class="block text-sm font-medium text-gray-700">Adresse email</label>
+        <input type="email" id="email" name="email"
+               value="jean.dupont@grenoble-inp.org" {# value="{{ user['email'] }}" #}
+               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00A300] focus:border-[#00A300]"
+               required>
+      </div>
+
+      <button type="submit"
+              class="bg-[#00A300] hover:bg-[#008500] text-white text-sm font-medium px-4 py-2 rounded-lg transition">
+        Enregistrer les modifications
+      </button>
+    </form>
+  </div>
+
+  <!-- Section des annonces du profil en bas de page (cible de #annonces-profil) -->
+  <div id="annonces-profil" class="bg-white p-6 rounded-xl shadow border border-gray-200 scroll-mt-6">
+    <div class="flex items-center justify-between mb-5">
+      <h2 class="text-xl font-bold text-gray-900">Annonces de ce profil</h2>
+      <a href="/ajouter" class="text-sm font-semibold text-[#00A300] hover:underline">
+        + Nouvelle annonce
+      </a>
+    </div>
+
+    {# {% if annonces %} #}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {# {% for annonce in annonces %} #}
+      {% include "_card.html" %}
+      {# {% endfor %} #}
+    </div>
+    {# {% else %} #}
+    {# <p class="text-gray-500 text-center py-8">Aucune annonce publiée pour le moment.</p> #}
+    {# {% endif %} #}
+  </div>
+
+</div>
+{% endblock %}
